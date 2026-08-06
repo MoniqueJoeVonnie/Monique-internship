@@ -6,69 +6,141 @@ import { Link, useParams } from "react-router-dom";
 const ItemDetails = () => {
   const { id } = useParams();
   const [item, setItem] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+  window.scrollTo(0, 0);
 
-    async function fetchItem() {
+  let isMounted = true;
+
+  async function fetchItem() {
+    try {
+      setIsLoading(true);
+      setError("");
+
       const response = await axios.get(
         "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
       );
 
-      const selectedItem = response.data.find(
-        (collection) => collection.id === Number(id)
+      const items = Array.isArray(response.data)
+        ? response.data
+        : [];
+
+      const selectedItem = items.find(
+        (collection) =>
+          Number(collection.id) === Number(id) ||
+          Number(collection.nftId) === Number(id)
       );
 
-      setItem(selectedItem);
+      if (!isMounted) return;
+
+      if (selectedItem) {
+        setItem(selectedItem);
+      } else {
+        setItem(null);
+        setError("This NFT could not be found.");
+      }
+    } catch (fetchError) {
+      console.error(
+        "Unable to load NFT details:",
+        fetchError
+      );
+
+      if (isMounted) {
+        setItem(null);
+        setError(
+          "The NFT details could not be loaded."
+        );
+      }
+    } finally {
+      if (isMounted) {
+        setIsLoading(false);
+      }
     }
+  }
 
-    fetchItem();
-  }, [id]);
+  fetchItem();
 
-  if (!item) {
-  return (
-    <div id="wrapper">
-      <div className="no-bottom no-top" id="content">
-        <section className="mt90 sm-mt-0">
-          <div className="container">
-            <div className="row">
-              
-              {/* Left image skeleton */}
-              <div className="col-md-6">
-                <div className="detail-skeleton-image skeleton"></div>
+  return () => {
+    isMounted = false;
+  };
+}, [id]);
+
+  if (isLoading) {
+    return (
+      <main
+        id="wrapper"
+        aria-busy="true"
+        aria-label="Loading NFT details"
+      >
+        <div
+          className="no-bottom no-top"
+          id="content"
+        >
+          <section className="mt90 sm-mt-0">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="detail-skeleton-image skeleton-shimmer"></div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="detail-skeleton-title skeleton-shimmer"></div>
+
+                  <div className="detail-skeleton-stats">
+                    <div className="detail-skeleton-stat skeleton-shimmer"></div>
+
+                    <div className="detail-skeleton-stat skeleton-shimmer"></div>
+                  </div>
+
+                  <div className="detail-skeleton-text skeleton-shimmer"></div>
+
+                  <div className="detail-skeleton-text skeleton-shimmer"></div>
+
+                  <div className="detail-skeleton-text short skeleton-shimmer"></div>
+
+                  <div className="detail-skeleton-author">
+                    <div className="detail-skeleton-avatar skeleton-shimmer"></div>
+
+                    <div className="detail-skeleton-name skeleton-shimmer"></div>
+                  </div>
+
+                  <div className="detail-skeleton-author">
+                    <div className="detail-skeleton-avatar skeleton-shimmer"></div>
+
+                    <div className="detail-skeleton-name skeleton-shimmer"></div>
+                  </div>
+
+                  <div className="detail-skeleton-price skeleton-shimmer"></div>
+                </div>
               </div>
-
-              {/* Right content skeleton */}
-              <div className="col-md-6">
-                <div className="detail-skeleton-title skeleton"></div>
-
-                <div className="detail-skeleton-stats">
-                  <div className="detail-skeleton-stat skeleton"></div>
-                  <div className="detail-skeleton-stat skeleton"></div>
-                </div>
-
-                <div className="detail-skeleton-text skeleton"></div>
-                <div className="detail-skeleton-text skeleton"></div>
-                <div className="detail-skeleton-text short skeleton"></div>
-
-                <div className="detail-skeleton-author">
-                  <div className="detail-skeleton-avatar skeleton"></div>
-                  <div className="detail-skeleton-name skeleton"></div>
-                </div>
-
-                <div className="detail-skeleton-author">
-                  <div className="detail-skeleton-avatar skeleton"></div>
-                  <div className="detail-skeleton-name skeleton"></div>
-                </div>
-
-                <div className="detail-skeleton-price skeleton"></div>
-              </div>
-
             </div>
-          </div>
-        </section>
-      </div>
-    </div>
+          </section>
+        </div>
+      </main>
+    );
+  }
+
+  if (error || !item) {
+  return (
+    <main id="wrapper">
+      <section
+        className="container text-center"
+        style={{ padding: "180px 20px" }}
+      >
+        <h2>NFT unavailable</h2>
+
+        <p>
+          {error ||
+            "The requested NFT could not be found."}
+        </p>
+
+        <Link to="/" className="btn-main">
+          Return Home
+        </Link>
+      </section>
+    </main>
   );
 }
 
@@ -118,7 +190,7 @@ const ItemDetails = () => {
 
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to="/author">
+                          <Link to={`/author/${item.authorId}`}>
                             <img
                               className="lazy"
                               src={item.authorImage}
@@ -129,7 +201,9 @@ const ItemDetails = () => {
                         </div>
 
                         <div className="author_list_info">
-                          <Link to="/author">Author #{item.authorId}</Link>
+                          <Link to={`/author/${item.authorId}`}>
+                            Author #{item.authorId}
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -141,7 +215,7 @@ const ItemDetails = () => {
 
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to="/author">
+                          <Link to={`/author/${item.authorId}`}>
                             <img
                               className="lazy"
                               src={item.authorImage}

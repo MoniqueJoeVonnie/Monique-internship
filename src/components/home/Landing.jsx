@@ -4,6 +4,7 @@ import backgroundImage from "../../images/bg-shape-1.jpg";
 import { Link } from "react-router-dom";
 import HotCollections from "./HotCollections";
 import NewItems from "./NewItems";
+import TopSellers from "./TopSellers";
 
 
 const Landing = () => {
@@ -72,6 +73,8 @@ const Landing = () => {
       <HotCollections />
 
       <NewItems />
+
+      <TopSellers />
     </>
   );
 };

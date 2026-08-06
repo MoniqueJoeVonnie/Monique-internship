@@ -43,25 +43,35 @@ const HotCollections = () => {
   };
 
   useEffect(() => {
-    async function fetchCollections() {
-      try {
-        const response = await axios.get(
-          "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
-        );
+  let isMounted = true;
 
+  async function fetchCollections() {
+    try {
+      const response = await axios.get(
+        "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
+      );
+
+      if (isMounted) {
         setCollections(response.data);
-      } catch (error) {
-        console.error(
-          "Unable to fetch hot collections:",
-          error
-        );
-      } finally {
+      }
+    } catch (error) {
+      console.error(
+        "Unable to fetch hot collections:",
+        error
+      );
+    } finally {
+      if (isMounted) {
         setLoading(false);
       }
     }
+  }
 
-    fetchCollections();
-  }, []);
+  fetchCollections();
+
+  return () => {
+    isMounted = false;
+  };
+}, []);
 
   const skeletonCards = new Array(4).fill(0);
 
@@ -86,11 +96,20 @@ const HotCollections = () => {
               ? skeletonCards.map((_, index) => (
                   <div key={index}>
                     <div className="collection-card">
-                      <div className="nft_coll skeleton-card">
-                        <div className="skeleton skeleton-banner"></div>
-                        <div className="skeleton skeleton-avatar"></div>
-                        <div className="skeleton skeleton-title"></div>
-                        <div className="skeleton skeleton-text"></div>
+                      <div className="nft_coll hot-collection-skeleton">
+                        <div className="nft_wrap">
+                          <div className="hot-collection-image-skeleton skeleton-shimmer"></div>
+                        </div>
+
+                        <div className="nft_coll_pp">
+                          <div className="hot-collection-avatar-skeleton skeleton-shimmer"></div>
+                        </div>
+
+                        <div className="nft_coll_info">
+                          <div className="hot-collection-title-skeleton skeleton-shimmer"></div>
+
+                          <div className="hot-collection-code-skeleton skeleton-shimmer"></div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -120,7 +139,7 @@ const HotCollections = () => {
                           </div>
 
                           <div className="nft_coll_pp">
-                            <Link to="/author">
+                            <Link to={`/author/${collection.authorId}`}>
                               <img
                                 className="lazy pp-coll"
                                 src={
