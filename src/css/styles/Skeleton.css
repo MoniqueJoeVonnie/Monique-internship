@@ -986,3 +986,38 @@
     width: 84%;
   }
 }
+
+/* =========================================
+   EXPLORE PAGE - REMOVE CARD LOAD FADE
+========================================= */
+
+.explore-nft-item,
+.explore-nft-item .nft__item_preview {
+  transition: none !important;
+  animation: none !important;
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+}
+
+
+
+/* =========================================
+   EXPLORE PAGE - PREVENT OVERLAY FLASH
+========================================= */
+
+.explore-nft-item .nft__item_extra {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+.explore-nft-item:hover .nft__item_extra {
+  display: table !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}

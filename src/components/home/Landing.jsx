@@ -70,11 +70,6 @@ const Landing = () => {
         </div>
       </section>
 
-      <HotCollections />
-
-      <NewItems />
-
-      <TopSellers />
     </>
   );
 };
