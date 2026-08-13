@@ -20,6 +20,8 @@ const Author = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [copyLabel, setCopyLabel] = useState("Copy");
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followerCount, setFollowerCount] = useState(0);
 
   useEffect(() => {
     let isMounted = true;
@@ -36,7 +38,15 @@ const Author = () => {
         });
 
         if (isMounted) {
-          setAuthor(response.data || null);
+          const authorData = response.data || null;
+
+          setAuthor(authorData);
+
+          setFollowerCount(
+            Number(authorData?.followers) || 0
+          );
+
+          setIsFollowing(false);
         }
       } catch (fetchError) {
         console.error(
@@ -65,25 +75,39 @@ const Author = () => {
   }, [authorId]);
 
   async function handleCopyAddress() {
-    if (!author?.address) return;
+  if (!author?.address) return;
 
-    try {
-      await navigator.clipboard.writeText(
-        author.address
-      );
+  try {
+    await navigator.clipboard.writeText(
+      author.address
+    );
 
-      setCopyLabel("Copied!");
+    setCopyLabel("Copied!");
 
-      window.setTimeout(() => {
-        setCopyLabel("Copy");
-      }, 1500);
-    } catch (copyError) {
-      console.error(
-        "Unable to copy address:",
-        copyError
-      );
-    }
+    window.setTimeout(() => {
+      setCopyLabel("Copy");
+    }, 1500);
+  } catch (copyError) {
+    console.error(
+      "Unable to copy address:",
+      copyError
+    );
   }
+}
+
+function handleFollowToggle() {
+  if (isFollowing) {
+    setFollowerCount((currentCount) =>
+      Math.max(currentCount - 1, 0)
+    );
+  } else {
+    setFollowerCount(
+      (currentCount) => currentCount + 1
+    );
+  }
+
+  setIsFollowing(!isFollowing);
+}
 
   if (isLoading) {
   return (
@@ -133,9 +157,6 @@ const Author = () => {
 
   const authorTag =
     author.tag || "author";
-
-  const followerCount =
-    author.followers ?? 0;
 
   const authorAddress =
     author.address || "Address unavailable";
@@ -211,8 +232,9 @@ const Author = () => {
                       <button
                         type="button"
                         className="btn-main"
+                        onClick={handleFollowToggle}
                       >
-                        Follow
+                        {isFollowing ? "Unfollow" : "Follow"}
                       </button>
                     </div>
                   </div>

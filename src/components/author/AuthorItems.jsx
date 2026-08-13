@@ -24,7 +24,7 @@ const AuthorItems = ({ author, items = [] }) => {
         <div className="row">
           {items.map((item, index) => {
             const itemId =
-              item.nftId || item.id || index;
+              item.id || item.nftId || index;
 
             const itemTitle =
               item.title || "Untitled NFT";
