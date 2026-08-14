@@ -192,13 +192,14 @@ const ExploreItems = () => {
       </div>
 
       {sortedItems
-        .slice(0, visibleItems)
-        .map((item) => {
-          const countdown =
-            getCountdown(item.expiryDate);
+      .slice(0, visibleItems)
+      .map((item) => {
 
-          return (
-            <div
+        const countdown =
+          getCountdown(item.expiryDate);
+
+        return (
+          <div
               key={item.id}
               className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
               style={{
@@ -209,7 +210,11 @@ const ExploreItems = () => {
               <div className="nft__item explore-nft-item">
                 <div className="author_list_pp">
                   <Link
-                    to={`/author/${item.authorId}`}
+                    to={`/author/${
+                      item.title === "Teal Ocean"
+                        ? 83937449
+                        : item.authorId
+                    }`}
                   >
                     <img
                       className="lazy"
