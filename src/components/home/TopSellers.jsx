@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Skeleton from "../UI/Skeleton";
+
 
 
 
@@ -139,16 +139,16 @@ const TopSellers = () => {
                       seller.volume;
 
                     return (
-                      <li key={seller.id}>
+                      <li key={seller.id || authorId}>
                         <div className="author_list_pp">
                           <Link
-                            to={`/author/${seller.authorId}`}
+                            to={`/author/${authorId}`}
                             state={{ seller }}
                           >
                             <img
                               className="lazy pp-author"
-                              src={seller.authorImage}
-                              alt={`${seller.authorName} profile`}
+                              src={sellerImage}
+                              alt={`${sellerName} profile`}
                             />
 
                             <i className="fa fa-check"></i>
@@ -157,13 +157,13 @@ const TopSellers = () => {
 
                         <div className="author_list_info">
                           <Link
-                            to={`/author/${seller.authorId}`}
+                            to={`/author/${authorId}`}
                             state={{ seller }}
                           >
-                            {seller.authorName}
+                            {sellerName}
                           </Link>
 
-                          <span>{seller.price} ETH</span>
+                          <span>{sellerPrice} ETH</span>
                         </div>
                       </li>
                     );
