@@ -1,70 +1,83 @@
-# Getting Started with Create React App
+# Ultraverse Market
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A responsive NFT marketplace web application developed as part of my Front-End Software Engineering internship. This project demonstrates practical experience working with React, REST APIs, reusable components, dynamic data, responsive layouts, loading states, animations, and production deployment.
 
-## Available Scripts
+## Live Demo
 
-In the project directory, you can run:
+**View the deployed application:**  
+https://monique-ultraverse-market.vercel.app
 
-### `npm start`
+## About the Project
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Ultraverse Market is an NFT marketplace interface where users can explore digital collections, view individual items and creators, browse top sellers, and interact with dynamic marketplace content.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The project began from an internship-provided starter repository. During the internship, I implemented and enhanced application functionality, UI behavior, API-driven content, loading states, responsiveness, animations, and deployment.
 
-### `npm test`
+## Features & Internship Work
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+During the project, I worked on functionality including:
 
-### `npm run build`
+- Dynamic NFT marketplace content using API data
+- Explore page with interactive sorting and filtering
+- Incremental "Load More" functionality
+- Dynamic author profile pages
+- Author-specific NFT item rendering
+- Follow and Unfollow functionality with dynamic follower counts
+- Top Sellers API integration
+- Skeleton loading states for marketplace content
+- Skeleton loading states for author profiles and items
+- Dynamic item detail pages
+- Responsive layouts across multiple screen sizes
+- AOS scroll animations
+- Navigation between marketplace items, authors, and application pages
+- Production build troubleshooting and optimization
+- Git/GitHub version control workflow
+- Production deployment with Vercel
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies Used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- React
+- JavaScript
+- HTML5
+- CSS3
+- React Router
+- Axios
+- REST APIs
+- React Slick
+- AOS (Animate On Scroll)
+- Git
+- GitHub
+- Vercel
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Technical Highlights
 
-### `npm run eject`
+### API Integration
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Marketplace and creator information is retrieved dynamically from external API endpoints and rendered through reusable React components.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Dynamic Author Profiles
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Author pages use route parameters and API data to display creator-specific information and NFT collections dynamically.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Loading Experience
 
-## Learn More
+Skeleton loading components were implemented to improve perceived performance while marketplace, author, and item data is being retrieved.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Responsive Design
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The interface was tested and adjusted across multiple viewport sizes to provide a consistent experience on desktop, tablet, and mobile devices.
 
-### Code Splitting
+### UI Animation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+AOS animations were incorporated into selected sections of the application to enhance the browsing experience without interfering with functionality.
 
 ### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The completed application is deployed to Vercel and connected to the GitHub repository for production deployment.
 
-### `npm run build` fails to minify
+## Running the Project Locally
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Clone the repository:
+
+```bash
+git clone https://github.com/MoniqueJoeVonnie/Monique-internship.git
